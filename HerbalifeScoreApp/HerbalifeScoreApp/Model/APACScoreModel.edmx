@@ -1,0 +1,879 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="APACScoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HL_CodeTable">
+          <Key>
+            <PropertyRef Name="Category" />
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeName" Type="varchar" MaxLength="50" />
+          <Property Name="SortSeq" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'APACScore.dbo.HL_Country' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="HL_Country">
+          <Key>
+            <PropertyRef Name="CountryCode" />
+          </Key>
+          <Property Name="CountryCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CountryName" Type="varchar" MaxLength="50" />
+          <Property Name="CurrencyCode" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="HL_Web_Agreement">
+          <Key>
+            <PropertyRef Name="AgreementId" />
+          </Key>
+          <Property Name="AgreementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="5" />
+          <Property Name="AgreementType" Type="varchar" MaxLength="10" />
+          <Property Name="TransportType" Type="varchar" MaxLength="10" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="WHCode" Type="varchar" MaxLength="5" />
+          <Property Name="PeriodFrom" Type="smalldatetime" />
+          <Property Name="PeriodTo" Type="smalldatetime" />
+          <Property Name="ServiceProvide" Type="nvarchar" MaxLength="500" />
+          <Property Name="OtherComment" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_AgreementDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgreementId" Type="int" />
+          <Property Name="ItemDetailId" Type="int" />
+          <Property Name="ContractValue" Type="money" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Master_ItemDetail">
+          <Key>
+            <PropertyRef Name="ItemDetailId" />
+          </Key>
+          <Property Name="ItemDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="varchar" MaxLength="100" />
+          <Property Name="ItemHeaderId" Type="int" />
+          <Property Name="SortSeq" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="HL_Web_Master_ItemHeader">
+          <Key>
+            <PropertyRef Name="ItemHeaderId" />
+          </Key>
+          <Property Name="ItemHeaderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportCode" Type="varchar" MaxLength="10" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+          <Property Name="SortSeq" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="HL_Web_ReportData_KPITP_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WebTaskId" Type="int" />
+          <Property Name="ItemDetailid" Type="int" />
+          <Property Name="ActualValue" Type="money" />
+          <Property Name="ContractValue" Type="money" />
+          <Property Name="Remark" Type="varchar" MaxLength="1000" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_ReportData_KPIWH_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WebTaskId" Type="int" />
+          <Property Name="ItemDetailid" Type="int" />
+          <Property Name="ActualValue" Type="money" />
+          <Property Name="ContractValue" Type="money" />
+          <Property Name="Remark" Type="varchar" MaxLength="1000" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Task">
+          <Key>
+            <PropertyRef Name="WebTaskId" />
+          </Key>
+          <Property Name="WebTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportCode" Type="varchar" MaxLength="10" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="5" />
+          <Property Name="WHCode" Type="varchar" MaxLength="5" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="PeriodFrom" Type="smalldatetime" />
+          <Property Name="PeriodTo" Type="smalldatetime" />
+          <Property Name="AgreementId" Type="int" />
+          <Property Name="HighlightAchievement" Type="nvarchar" MaxLength="500" />
+          <Property Name="ComplaintIssue" Type="nvarchar" MaxLength="500" />
+          <Property Name="NoData" Type="bit" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Vendor">
+          <Key>
+            <PropertyRef Name="VendorId" />
+          </Key>
+          <Property Name="VendorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="5" />
+          <Property Name="VendorName" Type="varchar" MaxLength="100" />
+          <Property Name="VendorShortName" Type="varchar" MaxLength="10" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'APACScore.dbo.HL_Web_VendorUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="HL_Web_VendorUser">
+          <Key>
+            <PropertyRef Name="VendorUserId" />
+          </Key>
+          <Property Name="VendorUserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Pw" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_VendorUserMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="VendorUserId" Type="int" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Warehouse">
+          <Key>
+            <PropertyRef Name="WHCode" />
+          </Key>
+          <Property Name="WHCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="5" />
+          <Property Name="WHType" Type="varchar" MaxLength="20" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_KPITP_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WinTaskId" Type="int" />
+          <Property Name="ItemDetailid" Type="int" />
+          <Property Name="ActualValue" Type="money" />
+          <Property Name="ContractValue" Type="money" />
+          <Property Name="Remark" Type="varchar" MaxLength="1000" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_KPIWH_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WinTaskId" Type="int" />
+          <Property Name="ItemDetailid" Type="int" />
+          <Property Name="ActualValue" Type="money" />
+          <Property Name="ContractValue" Type="money" />
+          <Property Name="Remark" Type="varchar" MaxLength="1000" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_SCTP_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WinTaskId" Type="int" />
+          <Property Name="ItemDetailid" Type="int" />
+          <Property Name="IncidentCount" Type="int" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_SCWH_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WinTaskId" Type="int" />
+          <Property Name="ItemDetailid" Type="int" />
+          <Property Name="IncidentCount" Type="int" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_Task">
+          <Key>
+            <PropertyRef Name="WinTaskId" />
+          </Key>
+          <Property Name="WinTaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WebTaskId" Type="int" />
+          <Property Name="ReportCode" Type="varchar" MaxLength="10" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="5" />
+          <Property Name="WHCode" Type="varchar" MaxLength="5" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="ReportYear" Type="int" />
+          <Property Name="ReportMonth" Type="int" />
+          <Property Name="PeriodFrom" Type="smalldatetime" />
+          <Property Name="PeriodTo" Type="smalldatetime" />
+          <Property Name="AgreementId" Type="int" />
+          <Property Name="DataFrom" Type="varchar" MaxLength="10" />
+          <Property Name="NoData" Type="bit" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ChangeUser" Type="varchar" MaxLength="50" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="APACScoreModelStoreContainer">
+          <EntitySet Name="HL_CodeTable" EntityType="Self.HL_CodeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Agreement" EntityType="Self.HL_Web_Agreement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_AgreementDetail" EntityType="Self.HL_Web_AgreementDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Master_ItemDetail" EntityType="Self.HL_Web_Master_ItemDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Master_ItemHeader" EntityType="Self.HL_Web_Master_ItemHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_ReportData_KPITP_Data" EntityType="Self.HL_Web_ReportData_KPITP_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_ReportData_KPIWH_Data" EntityType="Self.HL_Web_ReportData_KPIWH_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Task" EntityType="Self.HL_Web_Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Vendor" EntityType="Self.HL_Web_Vendor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_VendorUserMapping" EntityType="Self.HL_Web_VendorUserMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Warehouse" EntityType="Self.HL_Web_Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Win_ReportData_KPITP_Data" EntityType="Self.HL_Web_Win_ReportData_KPITP_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Win_ReportData_KPIWH_Data" EntityType="Self.HL_Web_Win_ReportData_KPIWH_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Win_ReportData_SCTP_Data" EntityType="Self.HL_Web_Win_ReportData_SCTP_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Win_ReportData_SCWH_Data" EntityType="Self.HL_Web_Win_ReportData_SCWH_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Web_Win_Task" EntityType="Self.HL_Web_Win_Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HL_Country" EntityType="Self.HL_Country" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [HL_Country].[CountryCode] AS [CountryCode], 
+    [HL_Country].[CountryName] AS [CountryName], 
+    [HL_Country].[CurrencyCode] AS [CurrencyCode]
+    FROM [dbo].[HL_Country] AS [HL_Country]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="HL_Web_VendorUser" EntityType="Self.HL_Web_VendorUser" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [HL_Web_VendorUser].[VendorUserId] AS [VendorUserId], 
+    [HL_Web_VendorUser].[Email] AS [Email], 
+    [HL_Web_VendorUser].[Pw] AS [Pw], 
+    [HL_Web_VendorUser].[Active] AS [Active], 
+    [HL_Web_VendorUser].[CreateUser] AS [CreateUser], 
+    [HL_Web_VendorUser].[CreateDate] AS [CreateDate], 
+    [HL_Web_VendorUser].[ChangeUser] AS [ChangeUser], 
+    [HL_Web_VendorUser].[ChangeDate] AS [ChangeDate]
+    FROM [dbo].[HL_Web_VendorUser] AS [HL_Web_VendorUser]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="APACScoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HL_CodeTable">
+          <Key>
+            <PropertyRef Name="Category" />
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortSeq" Type="Int32" />
+        </EntityType>
+        <EntityType Name="HL_Web_Agreement">
+          <Key>
+            <PropertyRef Name="AgreementId" />
+          </Key>
+          <Property Name="AgreementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AgreementType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TransportType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="WHCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PeriodFrom" Type="DateTime" Precision="0" />
+          <Property Name="PeriodTo" Type="DateTime" Precision="0" />
+          <Property Name="ServiceProvide" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="OtherComment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_AgreementDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgreementId" Type="Int32" />
+          <Property Name="ItemDetailId" Type="Int32" />
+          <Property Name="ContractValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Master_ItemDetail">
+          <Key>
+            <PropertyRef Name="ItemDetailId" />
+          </Key>
+          <Property Name="ItemDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ItemHeaderId" Type="Int32" />
+          <Property Name="SortSeq" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="HL_Web_Master_ItemHeader">
+          <Key>
+            <PropertyRef Name="ItemHeaderId" />
+          </Key>
+          <Property Name="ItemHeaderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortSeq" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="HL_Web_ReportData_KPITP_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WebTaskId" Type="Int32" />
+          <Property Name="ItemDetailid" Type="Int32" />
+          <Property Name="ActualValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ContractValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_ReportData_KPIWH_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WebTaskId" Type="Int32" />
+          <Property Name="ItemDetailid" Type="Int32" />
+          <Property Name="ActualValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ContractValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Task">
+          <Key>
+            <PropertyRef Name="WebTaskId" />
+          </Key>
+          <Property Name="WebTaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CountryCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="WHCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="PeriodFrom" Type="DateTime" Precision="0" />
+          <Property Name="PeriodTo" Type="DateTime" Precision="0" />
+          <Property Name="AgreementId" Type="Int32" />
+          <Property Name="HighlightAchievement" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ComplaintIssue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NoData" Type="Boolean" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Vendor">
+          <Key>
+            <PropertyRef Name="VendorId" />
+          </Key>
+          <Property Name="VendorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VendorShortName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_VendorUserMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="VendorUserId" Type="Int32" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Warehouse">
+          <Key>
+            <PropertyRef Name="WHCode" />
+          </Key>
+          <Property Name="WHCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="WHType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_KPITP_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WinTaskId" Type="Int32" />
+          <Property Name="ItemDetailid" Type="Int32" />
+          <Property Name="ActualValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ContractValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_KPIWH_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WinTaskId" Type="Int32" />
+          <Property Name="ItemDetailid" Type="Int32" />
+          <Property Name="ActualValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ContractValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_SCTP_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WinTaskId" Type="Int32" />
+          <Property Name="ItemDetailid" Type="Int32" />
+          <Property Name="IncidentCount" Type="Int32" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_ReportData_SCWH_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WinTaskId" Type="Int32" />
+          <Property Name="ItemDetailid" Type="Int32" />
+          <Property Name="IncidentCount" Type="Int32" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Web_Win_Task">
+          <Key>
+            <PropertyRef Name="WinTaskId" />
+          </Key>
+          <Property Name="WinTaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WebTaskId" Type="Int32" />
+          <Property Name="ReportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CountryCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="WHCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="ReportYear" Type="Int32" />
+          <Property Name="ReportMonth" Type="Int32" />
+          <Property Name="PeriodFrom" Type="DateTime" Precision="0" />
+          <Property Name="PeriodTo" Type="DateTime" Precision="0" />
+          <Property Name="AgreementId" Type="Int32" />
+          <Property Name="DataFrom" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NoData" Type="Boolean" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HL_Country">
+          <Key>
+            <PropertyRef Name="CountryCode" />
+          </Key>
+          <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="HL_Web_VendorUser">
+          <Key>
+            <PropertyRef Name="VendorUserId" />
+          </Key>
+          <Property Name="VendorUserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pw" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="APACScoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HL_CodeTable" EntityType="Self.HL_CodeTable" />
+          <EntitySet Name="HL_Web_Agreement" EntityType="Self.HL_Web_Agreement" />
+          <EntitySet Name="HL_Web_AgreementDetail" EntityType="Self.HL_Web_AgreementDetail" />
+          <EntitySet Name="HL_Web_Master_ItemDetail" EntityType="Self.HL_Web_Master_ItemDetail" />
+          <EntitySet Name="HL_Web_Master_ItemHeader" EntityType="Self.HL_Web_Master_ItemHeader" />
+          <EntitySet Name="HL_Web_ReportData_KPITP_Data" EntityType="Self.HL_Web_ReportData_KPITP_Data" />
+          <EntitySet Name="HL_Web_ReportData_KPIWH_Data" EntityType="Self.HL_Web_ReportData_KPIWH_Data" />
+          <EntitySet Name="HL_Web_Task" EntityType="Self.HL_Web_Task" />
+          <EntitySet Name="HL_Web_Vendor" EntityType="Self.HL_Web_Vendor" />
+          <EntitySet Name="HL_Web_VendorUserMapping" EntityType="Self.HL_Web_VendorUserMapping" />
+          <EntitySet Name="HL_Web_Warehouse" EntityType="Self.HL_Web_Warehouse" />
+          <EntitySet Name="HL_Web_Win_ReportData_KPITP_Data" EntityType="Self.HL_Web_Win_ReportData_KPITP_Data" />
+          <EntitySet Name="HL_Web_Win_ReportData_KPIWH_Data" EntityType="Self.HL_Web_Win_ReportData_KPIWH_Data" />
+          <EntitySet Name="HL_Web_Win_ReportData_SCTP_Data" EntityType="Self.HL_Web_Win_ReportData_SCTP_Data" />
+          <EntitySet Name="HL_Web_Win_ReportData_SCWH_Data" EntityType="Self.HL_Web_Win_ReportData_SCWH_Data" />
+          <EntitySet Name="HL_Web_Win_Task" EntityType="Self.HL_Web_Win_Task" />
+          <EntitySet Name="HL_Country" EntityType="Self.HL_Country" />
+          <EntitySet Name="HL_Web_VendorUser" EntityType="Self.HL_Web_VendorUser" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="APACScoreModelStoreContainer" CdmEntityContainer="APACScoreEntities">
+          <EntitySetMapping Name="HL_CodeTable">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_CodeTable">
+              <MappingFragment StoreEntitySet="HL_CodeTable">
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CodeName" ColumnName="CodeName" />
+                <ScalarProperty Name="SortSeq" ColumnName="SortSeq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Agreement">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Agreement">
+              <MappingFragment StoreEntitySet="HL_Web_Agreement">
+                <ScalarProperty Name="AgreementId" ColumnName="AgreementId" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="AgreementType" ColumnName="AgreementType" />
+                <ScalarProperty Name="TransportType" ColumnName="TransportType" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="WHCode" ColumnName="WHCode" />
+                <ScalarProperty Name="PeriodFrom" ColumnName="PeriodFrom" />
+                <ScalarProperty Name="PeriodTo" ColumnName="PeriodTo" />
+                <ScalarProperty Name="ServiceProvide" ColumnName="ServiceProvide" />
+                <ScalarProperty Name="OtherComment" ColumnName="OtherComment" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_AgreementDetail">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_AgreementDetail">
+              <MappingFragment StoreEntitySet="HL_Web_AgreementDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AgreementId" ColumnName="AgreementId" />
+                <ScalarProperty Name="ItemDetailId" ColumnName="ItemDetailId" />
+                <ScalarProperty Name="ContractValue" ColumnName="ContractValue" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Master_ItemDetail">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Master_ItemDetail">
+              <MappingFragment StoreEntitySet="HL_Web_Master_ItemDetail">
+                <ScalarProperty Name="ItemDetailId" ColumnName="ItemDetailId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemHeaderId" ColumnName="ItemHeaderId" />
+                <ScalarProperty Name="SortSeq" ColumnName="SortSeq" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Master_ItemHeader">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Master_ItemHeader">
+              <MappingFragment StoreEntitySet="HL_Web_Master_ItemHeader">
+                <ScalarProperty Name="ItemHeaderId" ColumnName="ItemHeaderId" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="SortSeq" ColumnName="SortSeq" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_ReportData_KPITP_Data">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_ReportData_KPITP_Data">
+              <MappingFragment StoreEntitySet="HL_Web_ReportData_KPITP_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WebTaskId" ColumnName="WebTaskId" />
+                <ScalarProperty Name="ItemDetailid" ColumnName="ItemDetailid" />
+                <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+                <ScalarProperty Name="ContractValue" ColumnName="ContractValue" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_ReportData_KPIWH_Data">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_ReportData_KPIWH_Data">
+              <MappingFragment StoreEntitySet="HL_Web_ReportData_KPIWH_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WebTaskId" ColumnName="WebTaskId" />
+                <ScalarProperty Name="ItemDetailid" ColumnName="ItemDetailid" />
+                <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+                <ScalarProperty Name="ContractValue" ColumnName="ContractValue" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Task">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Task">
+              <MappingFragment StoreEntitySet="HL_Web_Task">
+                <ScalarProperty Name="WebTaskId" ColumnName="WebTaskId" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="WHCode" ColumnName="WHCode" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="PeriodFrom" ColumnName="PeriodFrom" />
+                <ScalarProperty Name="PeriodTo" ColumnName="PeriodTo" />
+                <ScalarProperty Name="AgreementId" ColumnName="AgreementId" />
+                <ScalarProperty Name="HighlightAchievement" ColumnName="HighlightAchievement" />
+                <ScalarProperty Name="ComplaintIssue" ColumnName="ComplaintIssue" />
+                <ScalarProperty Name="NoData" ColumnName="NoData" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Vendor">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Vendor">
+              <MappingFragment StoreEntitySet="HL_Web_Vendor">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="VendorShortName" ColumnName="VendorShortName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_VendorUserMapping">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_VendorUserMapping">
+              <MappingFragment StoreEntitySet="HL_Web_VendorUserMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorUserId" ColumnName="VendorUserId" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Warehouse">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Warehouse">
+              <MappingFragment StoreEntitySet="HL_Web_Warehouse">
+                <ScalarProperty Name="WHCode" ColumnName="WHCode" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="WHType" ColumnName="WHType" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Win_ReportData_KPITP_Data">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Win_ReportData_KPITP_Data">
+              <MappingFragment StoreEntitySet="HL_Web_Win_ReportData_KPITP_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WinTaskId" ColumnName="WinTaskId" />
+                <ScalarProperty Name="ItemDetailid" ColumnName="ItemDetailid" />
+                <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+                <ScalarProperty Name="ContractValue" ColumnName="ContractValue" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Win_ReportData_KPIWH_Data">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Win_ReportData_KPIWH_Data">
+              <MappingFragment StoreEntitySet="HL_Web_Win_ReportData_KPIWH_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WinTaskId" ColumnName="WinTaskId" />
+                <ScalarProperty Name="ItemDetailid" ColumnName="ItemDetailid" />
+                <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+                <ScalarProperty Name="ContractValue" ColumnName="ContractValue" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Win_ReportData_SCTP_Data">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Win_ReportData_SCTP_Data">
+              <MappingFragment StoreEntitySet="HL_Web_Win_ReportData_SCTP_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WinTaskId" ColumnName="WinTaskId" />
+                <ScalarProperty Name="ItemDetailid" ColumnName="ItemDetailid" />
+                <ScalarProperty Name="IncidentCount" ColumnName="IncidentCount" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Win_ReportData_SCWH_Data">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Win_ReportData_SCWH_Data">
+              <MappingFragment StoreEntitySet="HL_Web_Win_ReportData_SCWH_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WinTaskId" ColumnName="WinTaskId" />
+                <ScalarProperty Name="ItemDetailid" ColumnName="ItemDetailid" />
+                <ScalarProperty Name="IncidentCount" ColumnName="IncidentCount" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_Win_Task">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_Win_Task">
+              <MappingFragment StoreEntitySet="HL_Web_Win_Task">
+                <ScalarProperty Name="WinTaskId" ColumnName="WinTaskId" />
+                <ScalarProperty Name="WebTaskId" ColumnName="WebTaskId" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="WHCode" ColumnName="WHCode" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="ReportYear" ColumnName="ReportYear" />
+                <ScalarProperty Name="ReportMonth" ColumnName="ReportMonth" />
+                <ScalarProperty Name="PeriodFrom" ColumnName="PeriodFrom" />
+                <ScalarProperty Name="PeriodTo" ColumnName="PeriodTo" />
+                <ScalarProperty Name="AgreementId" ColumnName="AgreementId" />
+                <ScalarProperty Name="DataFrom" ColumnName="DataFrom" />
+                <ScalarProperty Name="NoData" ColumnName="NoData" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Country">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Country">
+              <MappingFragment StoreEntitySet="HL_Country">
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HL_Web_VendorUser">
+            <EntityTypeMapping TypeName="APACScoreModel.HL_Web_VendorUser">
+              <MappingFragment StoreEntitySet="HL_Web_VendorUser">
+                <ScalarProperty Name="VendorUserId" ColumnName="VendorUserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Pw" ColumnName="Pw" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
